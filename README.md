@@ -9,4 +9,4 @@
 
 ---
 
-<img align="left" alt="ankit's Github Stats" src="https://github-readme-stats.vercel.app/api?username=ankit&show_icons=true&hide_border=true" />
+<img align="left" alt="ankitforcode's Github Stats" src="https://github-readme-stats.vercel.app/api?username=ankitforcode&show_icons=true&hide_border=true" />
