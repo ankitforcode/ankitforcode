@@ -11,6 +11,4 @@
 
 <img align="left" alt="ankitforcode's Github Stats" src="https://github-readme-stats.vercel.app/api?username=ankitforcode&show_icons=true&hide_border=true" />
 
----
-
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=ankitforcode)](https://github.com/anuraghazra/github-readme-stats)
