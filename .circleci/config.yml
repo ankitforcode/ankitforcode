@@ -75,69 +75,31 @@ workflows:
             tags:
               only: /.*?/
 
-      - deploy-staging:
-          context: ankitforcode
-          requires:
-            - build-test
-          filters:
-            branches:
-              only:
-                - develop
-
       - approval:
           type: approval
           requires:
             - build-test
           filters:
-            tags:
-              only: /^.*/
             branches:
-              ignore: /^.*/
+              only:
+                - develop/.*
+                - release/.*
+                - feature/.*
 
-      - deploy-sandbox:
+      - deploy-staging:
           context: ankitforcode
           requires:
             - approval
           filters:
-            tags:
-              only: /^.*/
-            branches:
-              ignore: /^.*/
-
-      - approval-mainnet:
-          type: approval
-          requires:
-            - build-test
-          filters:
             branches:
               only:
                 - develop
-
-      - deploy-sandbox-mainnet:
-          context: ankitforcode
-          requires:
-            - approval-mainnet
-          filters:
-            branches:
-              only:
-                - develop
-
-      - approval-prod:
-          type: approval
-          requires:
-            - build-test
-          filters:
-            tags:
-              only: /^.*/
-            branches:
-              ignore: /^.*/
 
       - deploy-production:
           context: ankitforcode
           requires:
             - approval-prod
           filters:
-            tags:
-              only: /^.*/
             branches:
-              ignore: /^.*/
+              only:
+                - release
