@@ -70,74 +70,36 @@ workflows:
   commit-flow:
     jobs:
       - build-test:
-          context: zumo-environment
+          context: ankitforcode
           filters:
             tags:
               only: /.*?/
-
-      - deploy-staging:
-          context: zumo-environment
-          requires:
-            - build-test
-          filters:
-            branches:
-              only:
-                - develop
 
       - approval:
           type: approval
           requires:
             - build-test
           filters:
-            tags:
-              only: /^.*/
             branches:
-              ignore: /^.*/
+              only:
+                - develop/.*
+                - release/.*
+                - feature/.*
 
-      - deploy-sandbox:
-          context: zumo-environment
+      - deploy-staging:
+          context: ankitforcode
           requires:
             - approval
           filters:
-            tags:
-              only: /^.*/
-            branches:
-              ignore: /^.*/
-
-      - approval-mainnet:
-          type: approval
-          requires:
-            - build-test
-          filters:
             branches:
               only:
                 - develop
-
-      - deploy-sandbox-mainnet:
-          context: zumo-environment
-          requires:
-            - approval-mainnet
-          filters:
-            branches:
-              only:
-                - develop
-
-      - approval-prod:
-          type: approval
-          requires:
-            - build-test
-          filters:
-            tags:
-              only: /^.*/
-            branches:
-              ignore: /^.*/
 
       - deploy-production:
-          context: zumo-environment
+          context: ankitforcode
           requires:
-            - approval-prod
+            - approval
           filters:
-            tags:
-              only: /^.*/
             branches:
-              ignore: /^.*/
+              only:
+                - release
