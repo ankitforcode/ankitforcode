@@ -1,0 +1,143 @@
+defaults: &defaults
+  docker:
+      - image: jonaskello/docker-and-compose
+        environment:
+          DATABASE_URL: postgres://root@localhost/circle_test
+      - image: circleci/postgres:11-alpine
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
+
+deploy: &deploy
+  docker:
+      - image: dlabsdevops/aws-tools:v1.0.0
+
+version: 2
+jobs:
+  build-test:
+    <<: *defaults
+    steps:
+      - type: checkout
+      - run:
+          name: Build env
+          command: |
+            echo "Put your build and test code here"
+            # docker-compose build --build-arg NODE_ENV=test api
+            # mkdir -m 777 build && docker-compose run api sh -c 'yarn lint && yarn test --forceExit && yarn build'
+
+  deploy-staging:
+    <<: *deploy
+    steps:
+      - type: checkout
+      - run:
+          name: Deploy Staging Environment
+          command: |
+            PROFILE="staging"
+            echo ${PROFILE}
+
+  deploy-sandbox:
+    <<: *deploy
+    steps:
+      - type: checkout
+      - run:
+          name: Deploy Sandbox Environment
+          command: |
+            PROFILE="sandbox"
+            echo ${PROFILE}
+
+  deploy-sandbox-mainnet:
+    <<: *deploy
+    steps:
+      - type: checkout
+      - run:
+          name: Deploy Sandbox Environment
+          command: |
+            PROFILE="sandbox"
+            echo ${PROFILE}
+
+  deploy-production:
+    <<: *deploy
+    steps:
+      - type: checkout
+      - run:
+          name: Deploy Production Environment
+          command: |
+            PROFILE="prod"
+            echo ${PROFILE}
+
+workflows:
+  version: 2
+  commit-flow:
+    jobs:
+      - build-test:
+          context: zumo-environment
+          filters:
+            tags:
+              only: /.*?/
+
+      - deploy-staging:
+          context: zumo-environment
+          requires:
+            - build-test
+          filters:
+            branches:
+              only:
+                - develop
+
+      - approval:
+          type: approval
+          requires:
+            - build-test
+          filters:
+            tags:
+              only: /^.*/
+            branches:
+              ignore: /^.*/
+
+      - deploy-sandbox:
+          context: zumo-environment
+          requires:
+            - approval
+          filters:
+            tags:
+              only: /^.*/
+            branches:
+              ignore: /^.*/
+
+      - approval-mainnet:
+          type: approval
+          requires:
+            - build-test
+          filters:
+            branches:
+              only:
+                - develop
+
+      - deploy-sandbox-mainnet:
+          context: zumo-environment
+          requires:
+            - approval-mainnet
+          filters:
+            branches:
+              only:
+                - develop
+
+      - approval-prod:
+          type: approval
+          requires:
+            - build-test
+          filters:
+            tags:
+              only: /^.*/
+            branches:
+              ignore: /^.*/
+
+      - deploy-production:
+          context: zumo-environment
+          requires:
+            - approval-prod
+          filters:
+            tags:
+              only: /^.*/
+            branches:
+              ignore: /^.*/
