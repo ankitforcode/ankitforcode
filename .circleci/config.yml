@@ -98,7 +98,7 @@ workflows:
       - deploy-production:
           context: ankitforcode
           requires:
-            - approval-prod
+            - approval
           filters:
             branches:
               only:
