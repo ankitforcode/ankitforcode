@@ -4,7 +4,7 @@
 - 🔭 I’m currently working as a Sr. Software Developer with Verizon Connect, Ireland!!
 - 🌱 I’m currently doing Masters in Artificial Intelligence.
 - 👯 I’m looking to collaborate with other's on some cool open source projects in GoLang or JavaScript.
-- 🥅 2020 Goals: Contribute more to Open Source projects and enhance my AWS and Azure Skills.
+- 🥅 2021 Goals: Contribute more to Open Source projects and enhance my AWS and Azure Skills.
 - ⚡ Fun fact: I love to see places and make everyday fun at work and with family.
 
 ---
