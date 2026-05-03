@@ -4,7 +4,7 @@
 - 🔭 I’m currently working as a Staff Enginner at CloudSmith!!
 - 🌱 I have completed Masters in Artificial Intelligence from National University Ireland, Galway.
 - 👯 I’m looking to collaborate with other's on some cool open source projects in GoLang or Python.
-- 🥅 2024 Goals: Contribute more to Open Source projects and enhance my AWS and Azure Skills.
+- 🥅 2026 Goals: Contribute more to Open Source projects and enhance my AWS and Azure Skills.
 - ⚡ Fun fact: I love to see places and make everyday fun at work and with family.
 
 ---
